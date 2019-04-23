@@ -5,14 +5,14 @@ from model.editorial import Editorial
 from model.story import Story
 
 
-def run(path, separator=';', min_separator='@'):
-    database = DB('./firebase/firebase-config-key.json').database
+def run(path, db_config_file, separator=';', min_separator='@', tag_separator=','):
+    database = DB(db_config_file).database
     file = file_parser.load(path, separator=separator)
     for entry in file:
         story = Story(title=entry['Título'],
                       year=entry['Año de publicación'],
                       theme=entry['Tema'],
-                      tags=entry['Tags'],
+                      tags=entry['Tags'].split(tag_separator),
                       synopsis=entry['Sinopsis'])
 
         writters = file_parser.multi_list(entry['Escritor'],
@@ -61,4 +61,4 @@ def run(path, separator=';', min_separator='@'):
 
 
 if __name__ == "__main__":
-    run('./data/Base de datos.csv', separator=';', min_separator='@')
+    run('./data/Base de datos.csv', '../firebase-config-key.json', separator=';', min_separator='@')

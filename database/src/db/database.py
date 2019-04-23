@@ -6,7 +6,6 @@ class DB:
         cred = credentials.Certificate(config)
         self.__app = initialize_app(cred)
         self.__database = firestore.client()
-        print(self)
 
     @property
     def database(self):
