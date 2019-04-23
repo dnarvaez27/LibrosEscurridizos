@@ -1,7 +1,9 @@
-class Person:
+from db.db_entity import DBEntity
+
+
+class Person(DBEntity):
     def __init__(self, _type, name, gender, description):
-        if not name:
-            raise Exception("{} Person must have a name".format(_type))
+        super().__init__("{}s".format(_type), {'name': name})
 
         self.type = _type
         self.name = name
@@ -14,14 +16,6 @@ class Person:
             'gender': self.gender,
             'description': self.description
         }
-
-    def save_or_get(self, database):
-        if self.name:
-            doc_ref = database.collection("{}s".format(self.type)).document(self.name)
-            if doc_ref.get().exists:
-                return doc_ref
-            return database.collection("{}s".format(self.type)).add(self.to_dict(), document_id=self.name)[1]
-        return None
 
     def __repr__(self):
         return '{}(name={}, gender={}, description={})'.format(self.type,

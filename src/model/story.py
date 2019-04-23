@@ -1,5 +1,10 @@
-class Story:
+from db.db_entity import DBEntity
+
+
+class Story(DBEntity):
     def __init__(self, title, year, theme, tags, synopsis):
+        super().__init__('Stories', {'title': title})
+
         self.title = title
         self.year = year
         self.theme = theme
@@ -34,9 +39,6 @@ class Story:
 
     def set_editorial(self, editorial):
         self.editorial = editorial
-
-    def save(self, database):
-        database.collection('Stories').add(self.to_dict())
 
     def __repr__(self):
         return 'Story(title={}, year={}, theme={}, tags={}, synopsis={})'.format(self.title,

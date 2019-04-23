@@ -1,12 +1,12 @@
 import file_parser
-from db import DB
+from db.database import DB
 from model.person import Person
 from model.editorial import Editorial
 from model.story import Story
 
 
 def run(path, separator=';', min_separator='@'):
-    database = DB('./firebase/firebase-config-key.json').get_db()
+    database = DB('./firebase/firebase-config-key.json').database
     file = file_parser.load(path, separator=separator)
     for entry in file:
         story = Story(title=entry['Título'],
