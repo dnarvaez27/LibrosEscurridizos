@@ -1,4 +1,8 @@
+import FilterBar from "./filterbar.js";
+
 const db = firebase.firestore();
+
+FilterBar(db);
 
 function solveStory(story) {
   return new Promise((resolve, reject) => {
@@ -28,21 +32,23 @@ function solveStory(story) {
   })
 }
 
-db.collection("Stories")
-  .get()
-  .then((querySnapshot) => {
-    let docs = [];
-    querySnapshot.forEach(doc => docs.push(solveStory(doc.data())));
+function fetchStories() {
+  db.collection("Stories")
+    .get()
+    .then((querySnapshot) => {
+      let docs = [];
+      querySnapshot.forEach(doc => docs.push(solveStory(doc.data())));
 
-    Promise.all(docs)
-      .then((vals) => {
-        const viz = d3.select('#viz')
-        viz
-          .append('ul')
-          .selectAll('li')
-          .data(vals)
-          .enter()
-          .append('li')
-          .text(d => JSON.stringify(d));
-      })
-  });
+      Promise.all(docs)
+        .then((vals) => {
+          const viz = d3.select('#viz')
+          viz
+            .append('ul')
+            .selectAll('li')
+            .data(vals)
+            .enter()
+            .append('li')
+            .text(d => JSON.stringify(d));
+        })
+    });
+}
