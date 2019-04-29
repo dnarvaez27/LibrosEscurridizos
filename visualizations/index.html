@@ -11,15 +11,21 @@
     <script defer src="/__/firebase/init.js"></script>
 
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <script type="module" src="app/filter.js"></script>
-    <script type="module" src="app/filterbar.js"></script>
-    <script type="module" src="app/app.js"></script>
+    <script defer type="module" src="app/filter.js"></script>
+    <script defer type="module" src="app/filterbar.js"></script>
+    <script defer type="module" src="app/app.js"></script>
 
     <link rel="stylesheet" type="text/css" href="styles/index.css" />
+    <link rel="stylesheet" type="text/css" href="styles/banner.css" />
+    <link rel="stylesheet" type="text/css" href="styles/filter.css" />
+    <link rel="stylesheet" type="text/css" href="styles/viz.css" />
   </head>
   <body>
     <div>
-      <h1>Stories Viz</h1>
+      <div id="banner">
+        <h1>Stories Viz</h1>
+      </div>
+      <div id="filter"></div>
       <div id="viz"></div>
     </div>
   </body>

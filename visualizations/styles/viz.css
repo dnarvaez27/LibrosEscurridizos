@@ -1,0 +1,6 @@
+#viz {
+  background-color: #f9f9f9;
+  height: calc(100% - 100px);
+  width: calc(100% - 10vw);
+  margin-left: 10vw;
+}

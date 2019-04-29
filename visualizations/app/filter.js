@@ -1,12 +1,17 @@
 const _args = Symbol('args');
+const _name = Symbol('name');
 
 export default class Filter {
   constructor(name, args = []) {
-    this.name = name;
+    this[_name] = name;
     this[_args] = args.reduce((o, i) => {
       o[i] = false;
       return o;
     }, {});
+  }
+
+  get name() {
+    return this[_name];
   }
 
   hasArg(arg) {
@@ -26,7 +31,7 @@ export default class Filter {
     return this[_args];
   }
 
-  toString(){
-    return `${this.name}: ${this.args}`;
+  toString() {
+    return `${this[_name]}: ${JSON.stringify(this[_args])}`;
   }
 }

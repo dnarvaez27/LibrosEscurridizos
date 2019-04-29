@@ -1,8 +1,8 @@
-import FilterBar from "./filterbar.js";
+import initFilterBar from "./filterbar.js";
 
 const db = firebase.firestore();
 
-FilterBar(db);
+initFilterBar(db);
 
 function solveStory(story) {
   return new Promise((resolve, reject) => {
