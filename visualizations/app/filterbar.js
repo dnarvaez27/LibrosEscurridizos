@@ -55,7 +55,7 @@ export class FilterBar {
   }
 
   get stories() {
-    this[_stories];
+    return this[_stories];
   }
 
   setStories(data = null) {
@@ -103,7 +103,7 @@ function dbToSet(db, collection, attrs, data = null) {
 }
 
 export default function init(db) {
-  function createBlock(viz, filters) {
+  function createBlock(filter, filters) {
     const container = document.createElement('div');
     filters.forEach(f => {
       const subcontainer = document.createElement('div');
@@ -117,10 +117,10 @@ export default function init(db) {
         input.setAttribute('type', 'checkbox')
         input.setAttribute('name', filters.fi)
         input.setAttribute('value', f.name)
-        input.setAttribute('id', ff);
+        input.setAttribute('id', `${f.name}_${ff}`);
 
         const text = document.createElement('label');
-        text.setAttribute('for', ff);
+        text.setAttribute('for', `${f.name}_${ff}`);
         text.appendChild(document.createTextNode(ff));
 
         filtercontainer.appendChild(input);
@@ -133,19 +133,20 @@ export default function init(db) {
       container.appendChild(subcontainer);
     });
 
-    viz.appendChild(container);
+    filter.appendChild(container);
   }
   const logic = new FilterBar(db);
-  const viz = document.getElementById('viz');
+  const filter = document.getElementById('filter');
 
   logic.init()
     .then(() => {
-      console.log(logic.editorials);
+      console.log(logic.stories);
 
-      createBlock(viz, logic.editorials);
-      createBlock(viz, logic.editors);
-      createBlock(viz, logic.illustrators);
-      createBlock(viz, logic.writters);
-      createBlock(viz, logic.stories);
+      createBlock(filter, logic.editorials);
+      createBlock(filter, logic.editors);
+      createBlock(filter, logic.illustrators);
+      createBlock(filter, logic.writters);
+
+      createBlock(filter, logic.stories);
     });
 }
