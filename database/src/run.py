@@ -9,8 +9,9 @@ def run(path, db_config_file, separator=';', min_separator='@', tag_separator=',
     database = DB(db_config_file).database
     file = file_parser.load(path, separator=separator)
     for entry in file:
+        print(entry)
         story = Story(title=entry['Título'],
-                      year=entry['Año de publicación'],
+                      year=entry['Año publicación'],
                       theme=entry['Tema'],
                       tags=entry['Tags'].split(tag_separator),
                       synopsis=entry['Sinopsis'])
