@@ -8,3 +8,24 @@ body > div:first-child {
   padding: 0;
   position: absolute;
 }
+
+#banner {
+  padding: 0;
+  text-align: center;
+  background-color: #212121;
+  color: white;
+}
+
+body > div{
+  display: grid;
+  grid-template-rows: 20vh 80vh;
+}
+
+body > div > #body {
+  display: grid;
+  grid-template-columns: 10vw 90vw;
+}
+
+body > div > #body > div{
+  display: inline-block;
+}

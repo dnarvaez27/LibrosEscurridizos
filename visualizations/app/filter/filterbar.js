@@ -110,7 +110,6 @@ export default function init(db) {
       const title = document.createElement('span')
       title.innerText = f.name;
       const filtercontainer = document.createElement('div');
-      console.log(f.filters);
       
       Object.keys(f.filters).forEach(ff => {
         const input = document.createElement('input');
@@ -121,7 +120,7 @@ export default function init(db) {
 
         const text = document.createElement('label');
         text.setAttribute('for', `${f.name}_${ff}`);
-        text.appendChild(document.createTextNode(ff));
+        text.appendChild(document.createTextNode(ff ? ff : '<Empty>'));
 
         filtercontainer.appendChild(input);
         filtercontainer.appendChild(text);
@@ -140,7 +139,6 @@ export default function init(db) {
 
   logic.init()
     .then(() => {
-      console.log(logic.stories);
 
       createBlock(filter, logic.editorials);
       createBlock(filter, logic.editors);

@@ -1,6 +1,13 @@
 #viz {
   background-color: #f9f9f9;
-  height: calc(100% - 100px);
-  width: calc(100% - 10vw - 10px);
-  margin-left: calc(10vw + 20px);
+}
+
+#viz > svg {
+  height: calc(100% - 5px);
+  width: 100%;
+}
+
+tspan:first-child {
+  fill: gray;
+  font-weight: bold;
 }
