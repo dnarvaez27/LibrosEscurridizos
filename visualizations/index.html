@@ -15,6 +15,7 @@
     <script defer type="module" src="app/filter/filterbar.js"></script>
     <script defer type="module" src="app/story.js"></script>
     <script defer type="module" src="app/viz/viz.js"></script>
+    <script defer type="module" src="app/query/query.js"></script>
     <script defer type="module" src="app/app.js"></script>
 
     <link rel="stylesheet" type="text/css" href="styles/index.css" />
@@ -33,7 +34,21 @@
       <div id="body">
         <div id="filter"></div>
         <div id="viz">
-          <svg id="viz1"></svg>
+          <!-- <svg id="viz1"></svg> -->
+          <div id="query">
+            <div id="opts">
+              <div>
+                <div id="entities"></div>
+                <button>Next</button>
+                <div class="disabled"></div>
+              </div>
+              <div>
+                <div></div>
+                <button>Next</button>
+                <div class="disabled"></div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

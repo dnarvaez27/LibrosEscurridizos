@@ -60,7 +60,7 @@ export default class Viz {
           if (!(key in editorials)) {
             editorials[key] = { type: 'Editorial', links: [] };
           }
-          editorials[key]['links'].push({ id: s['theme'], type: 'Tag' });
+          editorials[key]['links'].push({ id: s['theme'], type: 'Theme' });
         });
         makeGraph(svg_id, dictToGraph(editorials));
       });
