@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <script defer src="/__/firebase/5.10.0/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.10.0/firebase-firestore.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script defer type="module" src="app/viz/viz.js"></script>
+    <title>Document</title>
+    <style>
+      html,
+      body,
+      #viz1 {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+
+      .node_Editorial > circle {
+        fill: #2f2c40;
+      }
+
+      .node_Writter > circle {
+        fill: #f2ca7e;
+      }
+
+      .node_Writter > text {
+        fill: #212121;
+      }
+
+      .links > line {
+        stroke: #9c9c9c;
+      }
+    </style>
+  </head>
+  <body>
+    <svg id="viz1"></svg>
+    <script defer type="module">
+      import Viz from './app/viz/viz.js';
+
+      const firebase = window.firebase;
+      const db = firebase.firestore();
+      const viz = new Viz(db);
+      viz.editorialWritter('#viz1');
+    </script>
+  </body>
+</html>

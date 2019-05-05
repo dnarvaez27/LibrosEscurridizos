@@ -112,9 +112,7 @@ function makeGraph(_id, graph, _config = {}) {
   };
 
   const svg = d3
-    .select(_id)
-    .attr('id', `${_id}_svg`);
-
+    .select(_id);
 
   const dims = svg.node().getBoundingClientRect();
 
@@ -123,8 +121,8 @@ function makeGraph(_id, graph, _config = {}) {
 
   const simulation = d3
     .forceSimulation()
-    .force('link', d3.forceLink().id(d => d.id).distance(config['radius'] * 3).strength(0.1))
-    .force('charge', d3.forceManyBody().strength(-config['radius']))
+    .force('link', d3.forceLink().id(d => d.id).strength(.3).distance(config['radius'] * 5))
+    .force('charge', d3.forceManyBody().strength(-config['radius'] * 5))
     .force('collide', d3.forceCollide().radius(config['radius']))
     .force('center', d3.forceCenter(width / 2, height / 2));
 
@@ -135,6 +133,16 @@ function makeGraph(_id, graph, _config = {}) {
     .scaleExtent([0.1, 10]) // Boundaries of zoom
     .on('zoom', () => g.attr('transform', d3.event.transform))
   );
+
+  const links = g
+    .append('g')
+    .attr('class', 'links')
+    .selectAll('line')
+    .data(graph.links)
+    .enter()
+    .append('line')
+    .attr('stroke-width', config['stroke-width'])
+    .attr('stroke', config['stroke']);
 
   const nodes = g
     .append('g')
@@ -161,16 +169,6 @@ function makeGraph(_id, graph, _config = {}) {
       })
     );
 
-
-  const links = g
-    .append('g')
-    .attr('class', 'links')
-    .selectAll('line')
-    .data(graph.links)
-    .enter()
-    .append('line')
-    .attr('stroke-width', config['stroke-width'])
-    .attr('stroke', config['stroke']);
 
   nodes
     .append('circle')

@@ -1,5 +1,6 @@
 #viz {
   background-color: #f9f9f9;
+  position: relative;
 }
 
 #viz > svg {
@@ -12,9 +13,10 @@ tspan:first-child {
   font-weight: bold;
 }
 
-#viz > #query > #opts {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
+#viz > #query {
+  height: 100%;
+  position: absolute;
+  width: 100%;
 }
 
 #viz > #query > #opts > div {
@@ -23,6 +25,16 @@ tspan:first-child {
   border: 1px solid lightgray;
   padding: 10px 20px;
   margin: 5px 0 5px 5px;
+}
+
+#viz > #query > #opts {
+  height: 100%;
+}
+
+#viz > #query > #opts > #entities {
+  height: 100%;
+  width: 100%;
+  position: absolute;
 }
 
 #viz > #query > #opts > div > .disabled {
@@ -53,4 +65,22 @@ tspan:first-child {
 
 #viz > #query > #opts > div > #entities > div {
   padding: 5px;
+}
+
+#viz > #query > #opts > #entities > g.nodes > g {
+  cursor: pointer;
+}
+
+#viz > #query > #opts > #entities > g.nodes > g > circle {
+  stroke: gray;
+  stroke-width: 2px;
+  fill: white;
+}
+
+#viz > #query > #opts > #entities > g.nodes > g:hover > circle {
+  fill: gray;
+}
+
+#viz > #query > #opts > #entities > g.nodes > g:hover > text > tspan {
+  fill: white;
 }

@@ -5,14 +5,16 @@
   },
   "hosting": {
     "public": "visualizations",
-    "ignore": [
-      "firebase.json",
-      "**/.*",
-      "**/node_modules/**"
-    ],
-    "rewrites": [ {
-      "source": "/hola",
-      "destination": "hola.html"
-    } ]
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [
+      {
+        "source": "/viz1",
+        "destination": "viz1.html"
+      },
+      {
+        "source": "/viz2",
+        "destination": "viz2.html"
+      }
+    ]
   }
 }

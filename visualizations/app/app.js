@@ -5,13 +5,13 @@ import Query from './query/query.js';
 const firebase = window.firebase;
 const db = firebase.firestore();
 
-const q = new Query(db);
+// const q = new Query(db);
 // q.findDependency(q.entities[0], q.entities[2]);
-q.fillOpts();
+// q.fillOpts();
 
 // initFilterBar(db);
 
-// const viz = new Viz(db);
-// viz.editorialWritter();
+const viz = new Viz(db);
+viz.editorialWritter('#viz1');
 // viz.editorialTheme('#viz1');
 
