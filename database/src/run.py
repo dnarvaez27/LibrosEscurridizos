@@ -46,11 +46,12 @@ def run(path, db_config_file, separator=';', min_separator='@', tag_separator=',
                                          headers=['Editor', 'Género editor', 'Descripción editor'],
                                          separator=min_separator)
         for _editor in editors:
-            story.add_editor(Person(_type='Editor',
-                                    name=_editor['Editor'],
-                                    gender=_editor['Género editor'],
-                                    description=_editor['Descripción editor'])
-                             .save_or_get(database))
+            if _editor['Editor']:
+                story.add_editor(Person(_type='Editor',
+                                        name=_editor['Editor'],
+                                        gender=_editor['Género editor'],
+                                        description=_editor['Descripción editor'])
+                                 .save_or_get(database))
 
         story.set_editorial(Editorial(name=entry['Editorial'],
                                       _type=entry['Tipo de editorial'],
