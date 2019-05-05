@@ -14,10 +14,11 @@
     <script defer type="module" src="app/story.js"></script>
     <script defer type="module" src="app/viz/viz.js"></script>
     <script defer type="module" src="app/query/query.js"></script>
-    <title>Document</title>
+    <title>Relacionar Entidades</title>
     <style>
       html,
-      body {
+      body,
+      #rel {
         height: 100%;
         width: 100%;
         margin: 0;
@@ -27,5 +28,14 @@
   </head>
   <body>
     <svg id="rel"></svg>
+    <script defer type="module">
+      import Query from './app/query/query.js';
+
+      const firebase = window.firebase;
+      const db = firebase.firestore();
+
+      const q = new Query(db);
+      q.fillOpts('#rel');
+    </script>
   </body>
 </html>

@@ -65,7 +65,7 @@ export default class Query {
     return path(dep_a, dep_b);
   }
 
-  fillOpts() {
+  fillOpts(id) {
 
     const angles = {};
 
@@ -145,7 +145,7 @@ export default class Query {
     const _selected = [];
 
     const d3 = window.d3;
-    const svg = d3.select('#entities');
+    const svg = d3.select(id);
 
     const dims = svg.node().getBoundingClientRect();
     const width = dims['width'];
