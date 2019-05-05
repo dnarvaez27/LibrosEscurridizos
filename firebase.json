@@ -14,6 +14,18 @@
       {
         "source": "/viz2",
         "destination": "viz2.html"
+      },
+      {
+        "source": "/rel",
+        "destination": "rel.html"
+      },
+      {
+        "source": "/aggregation",
+        "destination": "aggregation.html"
+      },
+      {
+        "source": "/filter",
+        "destination": "filter.html"
       }
     ]
   }
