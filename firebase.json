@@ -9,7 +9,8 @@
     "rewrites": [
       {
         "source": "/viz1",
-        "destination": "viz1.html"
+        "destination": "viz1.html",
+        "type": 301
       },
       {
         "source": "/viz2",

@@ -15,6 +15,12 @@
     <script defer type="module" src="app/viz/viz.js"></script>
     <script defer type="module" src="app/query/query.js"></script>
     <title>Relacionar Entidades</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+      integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+      crossorigin="anonymous"
+    />
     <style>
       html,
       body,
@@ -23,6 +29,20 @@
         width: 100%;
         margin: 0;
         padding: 0;
+      }
+
+      .nodes > g {
+        cursor: pointer;
+      }
+
+      .nodes > g > foreignObject > button {
+        padding: 0;
+        width: 20px;
+        background-color: transparent;
+        border: none;
+        color: white;
+        margin: 0;
+        outline: none;
       }
     </style>
   </head>
@@ -36,6 +56,7 @@
 
       const q = new Query(db);
       q.fillOpts('#rel');
+      q.make([['Editorials', 'name'], ['Editorials', 'city']]);
     </script>
   </body>
 </html>
