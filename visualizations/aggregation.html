@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <script defer src="/__/firebase/5.10.0/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.10.0/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Busquedas de Agregación</title>
+</head>
+<body>
+    <p>Entidad 1</p>
+    <select id="entidad1" onchange="selection(this.value)">
+        <option value='' selected disabled hidden>Escoja una entidad</option>
+        <option value ='Stories' disabled>Stories</option>
+        <option value ='Writters'>Writters</option>
+        <option value ='Editorials'>Editorials</option>
+        <option value ='Editors'>Editors</option>
+        <option value ='Illustrators'>Illustrators</option>
+    </select>
+    <p>Entidad 2</p>
+    <select id="entidad2"></select>
+    <button id="botonResultado" onclick="obtain()">Procesar</button>
+    <h3>Result:</h3>
+    <p id="resultado"></p>
+    <script>
+        function selection(value) {
+            let arrayItems2=['Editorials', 'Editors', 'Illustrators', 'Writters'];
+            let index = arrayItems2.indexOf(value);
+            arrayItems2.splice(index, 1);
+            let selectList=document.getElementById("entidad2");
+            while (selectList.options.length !== 0){
+                selectList.options.remove(0);
+            }
+            arrayItems2.forEach(i => {
+                selectList.options[selectList.options.length] = new Option(i, i);
+            });
+        }
+        function obtain() {
+            const firebase = window.firebase;
+            const db = firebase.firestore();
+            let selectedEntity1 = document.getElementById("entidad1").value;
+            let selectedEntity2 = document.getElementById("entidad2").value;
+            //Aqui va la diversion
+            let array1 = [];
+            db.collection(selectedEntity1).get().then(i => {
+                i.forEach(b => {
+                  array1.push(b.data()["name"]);
+            })});
+            let array2 = [];
+            let stories = db.collection("Stories");
+            stories.get().then( k => {
+                  k.forEach(b => {
+                    array2.push(b.data());
+            })});
+            console.log(array1.length);
+            console.log(array2.length);
+            let result = document.getElementById("resultado");
+            console.log(array1);
+            console.log(array2);
+            result.innerHTML = "Terminó todo";
+        }
+    </script>
+</body>
+</html>
