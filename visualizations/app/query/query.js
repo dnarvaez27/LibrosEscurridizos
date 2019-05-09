@@ -411,7 +411,6 @@ export default class Query {
     }
 
     if (arr.length === 2) {
-
       const end = arr[0];
       const start = arr[1];
 
@@ -429,10 +428,18 @@ export default class Query {
             .then(qs => diff_from_one(qs, start, end))
             .then(data => console.log(data));
         }
-        else if (arr.length === 3) {
-
+        else if(this[_depGraph][start[0]] === end[0]){
+          console.log(123);
+          
+          this[_db].collection(end[0])
+            .get()
+            .then(qs => diff_from_one(qs, end, start))
+            .then(data => console.log(data));
         }
       }
+    }
+    else if (arr.length === 3) {
+      
     }
   }
 }

@@ -10,15 +10,14 @@ export default class Viz {
 
   editorialWritter(svg_id) {
     const stories = [];
-    this[_db].collection('Stories')
+    this[_db].collection('Libros')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(s => {
           const st = new Story(this[_db], s);
           const p = st.fetch_writters()
-            .then(s => {
-              return s.fetch_editorial();
-            });
+            .then(s => s.fetch_editorial())
+            .then(s => s.fetch_illustrators());
           stories.push(p);
         });
         return stories;
@@ -26,23 +25,26 @@ export default class Viz {
       .then(ps => Promise.all(ps))
       .then(stories => {
         const editorials = {};
+
         stories.forEach(s => {
-          const key = `${s['editorial']['name']} (${s['editorial']['city']})`;
+          const key = `${s['editorial']['nombre']} (${s['editorial']['ciudad']})`;
           if (!(key in editorials)) {
-            editorials[key] = { type: 'Editorial', links: [] };
+            editorials[key] = { type: 'Editorial', links: [], classname: s['editorial']['tipo'] };
           }
           editorials[key]['links'] = [
             ...editorials[key]['links'],
-            ...(s['writters'].map(w => ({ id: w['name'], type: 'Writter' })))
+            ...(s['escritores'].map(w => ({ id: w['nombre'], type: 'Escritor' }))),
+            ...(s['ilustradores'].map(w => ({ id: w['nombre'], type: 'Ilustrador' })))
           ];
         });
+
         makeGraph(svg_id, dictToGraph(editorials));
       });
   }
 
   editorialTheme(svg_id) {
     const stories = [];
-    this[_db].collection('Stories')
+    this[_db].collection('Libros')
       .get()
       .then(querySnapshot => {
         querySnapshot.forEach(s => {
@@ -55,25 +57,45 @@ export default class Viz {
       .then(stories => {
         const editorials = {};
         stories.forEach(s => {
-          const key = `${s['editorial']['name']} (${s['editorial']['city']})`;
+          const key = `${s['editorial']['nombre']} (${s['editorial']['ciudad']})`;
 
           if (!(key in editorials)) {
-            editorials[key] = { type: 'Editorial', links: [] };
+            editorials[key] = { type: 'Editorial', links: [], 'classname': s['editorial']['tipo'] };
           }
-          editorials[key]['links'].push({ id: s['theme'], type: 'Theme' });
+          editorials[key]['links'].push({ id: s['tema'], type: 'Tema' });
         });
-        makeGraph(svg_id, dictToGraph(editorials));
+
+        const d = dictToGraph(editorials);
+
+        const t = {};
+        d.links.forEach(l => {
+          if (!(l.target in t)) {
+            t[l.target] = 0;
+          }
+          t[l.target] = t[l.target] + 1;
+        });
+
+        d.nodes.forEach(n => {
+          if (n.type === 'Tema') {
+            if (n.id in t) {
+              n.rad = t[n.id];
+            }
+          }
+        });
+
+        makeGraph(svg_id, d);
       });
   }
 }
 
 function dictToGraph(dict) {
+
   let nodes = {};
   let links = [];
 
   Object.keys(dict).forEach(n => {
     if (!(n in nodes)) {
-      nodes[n] = { id: n, type: dict[n]['type'] };
+      nodes[n] = { id: n, type: dict[n]['type'], 'classname': dict[n]['classname'] };
     }
     dict[n]['links'].forEach(l => {
       if (!(l['id'] in nodes)) {
@@ -86,7 +108,6 @@ function dictToGraph(dict) {
 }
 
 function makeGraph(_id, graph, _config = {}) {
-
   const angles = {};
 
   function getAngle(d) {
@@ -121,9 +142,9 @@ function makeGraph(_id, graph, _config = {}) {
 
   const simulation = d3
     .forceSimulation()
-    .force('link', d3.forceLink().id(d => d.id).strength(.3).distance(config['radius'] * 5))
-    .force('charge', d3.forceManyBody().strength(-config['radius'] * 5))
-    .force('collide', d3.forceCollide().radius(config['radius']))
+    .force('link', d3.forceLink().id(d => d.id).strength(.3).distance(d => d.rad ? (d.rad * config['radius'] * 5) + config['radius'] : config['radius'] * 5))
+    .force('charge', d3.forceManyBody().strength(d => -d.rad * config['radius'] * 10))
+    .force('collide', d3.forceCollide().radius(d => d.rad ? (d.rad * config['radius'] / 5) + config['radius'] : config['radius']))
     .force('center', d3.forceCenter(width / 2, height / 2));
 
   const g = svg.append('g');
@@ -151,7 +172,7 @@ function makeGraph(_id, graph, _config = {}) {
     .data(graph.nodes)
     .enter()
     .append('g')
-    .attr('class', n => `node_${n.type}`)
+    .attr('class', n => `node_${n.type} ${n['classname']}`)
     .call(d3.drag()
       .on('start', d => {
         if (!d3.event.active) simulation.alphaTarget(0.3).restart();
@@ -172,7 +193,7 @@ function makeGraph(_id, graph, _config = {}) {
 
   nodes
     .append('circle')
-    .attr('r', config['radius'])
+    .attr('r', d => d.rad ? (d.rad * config['radius'] / 5) + config['radius'] : config['radius'])
     .attr('fill', config['fill']);
 
   nodes

@@ -56,7 +56,8 @@
 
       const q = new Query(db);
       q.fillOpts('#rel');
-      q.make([['Editorials', 'name'], ['Editorials', 'city']]);
+      q.make([['Stories', 'title'], ['Editorials', 'city']]);
+      // q.make([['Writters', 'name'], ['Stories', 'title']]);
     </script>
   </body>
 </html>

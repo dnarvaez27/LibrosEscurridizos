@@ -6,32 +6,27 @@ export default class Story {
 
     const data = qs.data();
 
-    this['title'] = data['title'];
-    this['year'] = data['year'];
-    this['theme'] = data['theme'];
-    this['synopsis'] = data['synopsis'];
+    this['titulo'] = data['titulo'];
+    this['anio'] = data['anio'];
+    this['tema'] = data['tema'];
+    this['sinopsis'] = data['sinopsis'];
     this['tags'] = data['tags'];
 
     this['editorial'] = data['editorial'];
-    this['editors'] = data['editors'];
-    this['illustrators'] = data['illustrators'];
-    this['writters'] = data['writters'];
+    this['ilustradores'] = data['ilustradores'];
+    this['escritores'] = data['escritores'];
   }
 
   fetch_editorial() {
     return this.fetchAttribute('editorial');
   }
 
-  fetch_editor() {
-    return this.fetchAttribute('editor');
-  }
-
   fetch_illustrators() {
-    return this.fetchAttributes('illustrators');
+    return this.fetchAttributes('ilustradores');
   }
 
   fetch_writters() {
-    return this.fetchAttributes('writters');
+    return this.fetchAttributes('escritores');
   }
 
   fetchAttribute(attr) {
@@ -39,7 +34,7 @@ export default class Story {
       .then(value => {
         this[attr] = value.data();
         return this;
-      })
+      });
   }
 
   fetchAttributes(attr) {

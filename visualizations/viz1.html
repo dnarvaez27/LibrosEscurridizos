@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <script defer src="/__/firebase/5.10.0/firebase-app.js"></script>
-    <script defer src="/__/firebase/5.10.0/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/6.0.1/firebase-app.js"></script>
+    <script defer src="/__/firebase/6.0.1/firebase-firestore.js"></script>
     <!-- initialize the SDK after all desired features are loaded -->
     <script defer src="/__/firebase/init.js"></script>
 
@@ -23,16 +23,28 @@
         padding: 0;
       }
 
-      .node_Editorial > circle {
-        fill: #2f2c40;
+      .node_Editorial.Grande > circle {
+        fill: #eae671;
       }
 
-      .node_Writter > circle {
-        fill: #f2ca7e;
-      }
-
-      .node_Writter > text {
+      .node_Editorial > text {
         fill: #212121;
+      }
+
+      .node_Editorial.Independiente > circle {
+        fill: #8cc63f;
+      }
+
+      .node_Ilustrador > circle {
+        fill: #7782ad;
+      }
+
+      .node_Escritor > circle {
+        fill: #77b7b1;
+      }
+
+      .node_Escritor > text {
+        fill: white;
       }
 
       .links > line {
