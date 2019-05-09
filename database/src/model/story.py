@@ -3,7 +3,7 @@ from db.db_entity import DBEntity
 
 class Story(DBEntity):
     def __init__(self, title, year, theme, tags, synopsis):
-        super().__init__('Stories', {'title': title})
+        super().__init__('Libros', {'title': title})
 
         self.title = title
         self.year = year
@@ -12,19 +12,17 @@ class Story(DBEntity):
         self.synopsis = synopsis
         self.writters = []
         self.illustrators = []
-        self.editors = []
         self.editorial = None
 
     def to_dict(self):
         return {
-            'title': self.title,
-            'year': self.year,
-            'theme': self.theme,
+            'titulo': self.title,
+            'anio': self.year,
+            'tema': self.theme,
             'tags': self.tags,
-            'synopsis': self.synopsis,
-            'writters': self.writters,
-            'illustrators': self.illustrators,
-            'editors': self.editors,
+            'sinopsis': self.synopsis,
+            'escritores': self.writters,
+            'ilustradores': self.illustrators,
             'editorial': self.editorial
         }
 
@@ -33,9 +31,6 @@ class Story(DBEntity):
 
     def add_illustrator(self, illustrator):
         self.illustrators.append(illustrator)
-
-    def add_editor(self, editor):
-        self.editors = editor
 
     def set_editorial(self, editorial):
         self.editorial = editorial

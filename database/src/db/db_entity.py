@@ -23,6 +23,8 @@ class DBEntity(ABC):
         if doc_ref.get().exists:
             return doc_ref
         return database.collection(self.collection).add(self.to_dict(), document_id=self.doc_key)[1]
+        # return self
 
     def save(self, database):
         database.collection(self.collection).add(self.to_dict())
+        # return self
