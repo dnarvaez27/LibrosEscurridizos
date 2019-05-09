@@ -1,12 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <script defer src="/__/firebase/6.0.1/firebase-app.js"></script>
+    <script defer src="/__/firebase/6.0.1/firebase-firestore.js"></script>
+    <!-- initialize the SDK after all desired features are loaded -->
+    <script defer src="/__/firebase/init.js"></script>
+
     <title>Document</title>
-</head>
-<body>
-  <p>Hola, soy Ramos</p>  
-</body>
+    <script defer type="module" src="./app/fichas/story/list.js"></script>
+    <style>
+      * {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      #search {
+        width: 50%;
+        margin: 10px;
+        border-radius: 50px;
+        border: 1px solid gray;
+        padding: 5px 10px;
+        outline: none;
+      }
+
+      #libros-header {
+        text-align: center;
+      }
+
+      #libros-list {
+        width: 100%;
+      }
+
+      #libros-list > tr {
+        cursor: pointer;
+      }
+
+      #libros-list > tr:hover {
+        background-color: gray;
+        color: white;
+      }
+
+      #libros-list > tr > td {
+        border: 1px solid gray;
+        padding: 5px 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <div id="libros-header">
+        <h1>Libros</h1>
+        <input id="search" />
+      </div>
+      <table id="libros-list"></table>
+    </div>
+    <script defer type="module">
+      import LibrosList from './app/fichas/story/list.js';
+      const list = new LibrosList();
+      list.getAll();
+
+      const search = document.getElementById('search');
+      search.addEventListener('change', e => list.search(e.target.value));
+    </script>
+  </body>
 </html>

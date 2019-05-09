@@ -143,7 +143,7 @@ function makeGraph(_id, graph, _config = {}) {
   const simulation = d3
     .forceSimulation()
     .force('link', d3.forceLink().id(d => d.id).strength(.3).distance(d => d.rad ? (d.rad * config['radius'] * 5) + config['radius'] : config['radius'] * 5))
-    .force('charge', d3.forceManyBody().strength(d => -d.rad * config['radius'] * 10))
+    .force('charge', d3.forceManyBody().strength(d => -(d.rad || 1) * config['radius'] * 5))
     .force('collide', d3.forceCollide().radius(d => d.rad ? (d.rad * config['radius'] / 5) + config['radius'] : config['radius']))
     .force('center', d3.forceCenter(width / 2, height / 2));
 

@@ -31,6 +31,14 @@
       {
         "source": "/filter",
         "destination": "filter.html"
+      },
+      {
+        "source": "/st",
+        "destination": "fichasHTML/libro.html"
+      },
+      {
+        "source": "**",
+        "destination": "pagina/index.html"
       }
     ]
   }
