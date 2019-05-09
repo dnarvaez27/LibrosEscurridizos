@@ -16,6 +16,10 @@
         "destination": "viz2.html"
       },
       {
+        "source": "/fichas",
+        "destination":"fichas.html"
+      },
+      {
         "source": "/rel",
         "destination": "rel.html"
       },

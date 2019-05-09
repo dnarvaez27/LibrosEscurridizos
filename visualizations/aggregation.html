@@ -54,12 +54,10 @@
             stories.get().then( k => {
                   k.forEach(b => {
                     array2.push(b.data());
-            })});
-            console.log(array1.length);
-            console.log(array2.length);
+            })
+          return array2;
+          }).then(i =>{console.log(i.length)});
             let result = document.getElementById("resultado");
-            console.log(array1);
-            console.log(array2);
             result.innerHTML = "Terminó todo";
         }
     </script>
