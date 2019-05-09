@@ -4,16 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script defer type="module" src="app/fichas.js"></script>
+    <script src="app/fichas/fichas.js"></script>
     <title>Document</title>
     <style>
-
         #botones{
             text-align: center;
         }
 
         #botones > button{
             display: inline-block;
+        }
+        #frame {
+            height: 100%;
+            width: 100%;
+        }
+        #frameAct{
+            height: 100%;
+            width: 100%;
         }
     </style>
 </head>
@@ -23,6 +30,9 @@
             <button onclick="cargarEditoriales()">Editoriales</button>
             <button onclick="cargarLibros()">Libros</button>
             <button onclick="cargarIlustradores()">Ilustradores</button>
+    </div>
+    <div id="frame">
+        <iframe id="frameAct"></iframe>
     </div>
 </body>
 </html>

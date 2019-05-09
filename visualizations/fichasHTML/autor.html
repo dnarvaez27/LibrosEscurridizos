@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script defer src="/__/firebase/5.10.0/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.10.0/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <title>Document</title>
+</head>
+<script>
+    function cargaAutor(){
+        const firebase = window.firebase;
+        const db = firebase.firestore();
+        //Aqui va la diversion
+        let array2 = [];
+        let divisor=document.getElementById("porAutor");
+        let stories = db.collection("Escritores");
+        stories.get().then( k => {
+            k.forEach(b => {
+            array2.push(b.data());
+            })
+            return array2;   
+        }).then(i =>{
+        console.log(i);
+        });
+        let a= document.createElement("p");
+        a.innerText="Terminando";
+        divisor.appendChild(a);
+    }    
+</script>
+<body onload="cargaAutor()">
+  <div id="porAutor">
+  </div>  
+</body>
+
+</html>
