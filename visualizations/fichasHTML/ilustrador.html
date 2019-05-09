@@ -1,12 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <script defer src="/__/firebase/5.10.0/firebase-app.js"></script>
+    <script defer src="/__/firebase/5.10.0/firebase-firestore.js"></script>
+    <script defer src="/__/firebase/init.js"></script>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script defer type="module" src="../app/fichas/ilustrador/list.js"></script>
+    <title>Ilustradores</title>
+    <style>
+        * {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #search {
+        width: 50%;
+        margin: 10px;
+        border-radius: 50px;
+        border: 1px solid gray;
+        padding: 5px 10px;
+        outline: none;
+      }
+
+      #ilustradorHeader {
+        text-align: center;
+      }
+      #porIlustrador {
+        width: 100%;
+      }
+
+      #porIlustrador> tr {
+        cursor: pointer;
+      }
+
+      #porIlustrador > tr:hover {
+        background-color: gray;
+        color: white;
+      }
+
+      #porIlustrador > tr > td {
+        border: 1px solid gray;
+        padding: 5px 10px;
+      }
+    </style>
 </head>
+
 <body>
-  <p>Hola, soy Ramos</p>  
+    <div>
+    <div id="ilustradorHeader">
+        <h1>Ilustradores</h1>
+        <input id="search"/>
+    </div>
+    <table id="porIlustrador">
+    </table>
+    </div>
+    <script defer type="module">
+      import IlustradorList from '../app/fichas/ilustrador/list.js';
+      const list = new IlustradorList();
+      list.getAll();
+      const search = document.getElementById('search');
+      search.addEventListener('change', e => list.search(e.target.value));
+    </script>
 </body>
 </html>

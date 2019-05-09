@@ -8,7 +8,7 @@
     <script defer src="/__/firebase/init.js"></script>
 
     <title>Document</title>
-    <script defer type="module" src="./app/fichas/story/list.js"></script>
+    <script defer type="module" src="../app/fichas/story/list.js"></script>
     <style>
       * {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -55,7 +55,7 @@
       <table id="libros-list"></table>
     </div>
     <script defer type="module">
-      import LibrosList from './app/fichas/story/list.js';
+      import LibrosList from '../app/fichas/story/list.js';
       const list = new LibrosList();
       list.getAll();
 
