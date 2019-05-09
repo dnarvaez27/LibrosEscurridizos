@@ -3,17 +3,18 @@ from db.database import DB
 from model.person import Person
 from model.editorial import Editorial
 from model.story import Story
-
+import json
 
 def run(path, db_config_file, separator=';', min_separator='@', tag_separator=','):
     database = DB(db_config_file).database
     file = file_parser.load(path, separator=separator)
     for entry in file:
-        print(entry)
+        print(json.dumps(entry, indent=2, ensure_ascii=False))
+
         story = Story(title=entry['Título'],
                       year=entry['Año publicación'],
                       theme=entry['Tema'],
-                      tags=entry['Tags'].split(tag_separator),
+                      tags=[a.strip().upper() for a in entry['Tags'].split(tag_separator)],
                       synopsis=entry['Sinopsis'])
 
         writters = file_parser.multi_list(entry['Escritor'],
@@ -22,7 +23,7 @@ def run(path, db_config_file, separator=';', min_separator='@', tag_separator=',
                                           headers=['Escritor', 'Género escritor', 'Descripción escritor'],
                                           separator=min_separator)
         for _writter in writters:
-            story.add_writter(Person(_type="Writter",
+            story.add_writter(Person(_type="Escritor",
                                      name=_writter['Escritor'],
                                      gender=_writter['Género escritor'],
                                      description=_writter['Descripción escritor'])
@@ -34,24 +35,11 @@ def run(path, db_config_file, separator=';', min_separator='@', tag_separator=',
                                               headers=['Ilustrador', 'Género ilustrador', 'Descripción ilustrador'],
                                               separator=min_separator)
         for _illustrator in illustrators:
-            story.add_illustrator(Person(_type='Illustrator',
+            story.add_illustrator(Person(_type='Ilustrador',
                                          name=_illustrator['Ilustrador'],
                                          gender=_illustrator['Género ilustrador'],
                                          description=_illustrator['Descripción ilustrador'])
                                   .save_or_get(database))
-
-        editors = file_parser.multi_list(entry['Editor'],
-                                         entry['Género editor'],
-                                         entry['Descripción editor'],
-                                         headers=['Editor', 'Género editor', 'Descripción editor'],
-                                         separator=min_separator)
-        for _editor in editors:
-            if _editor['Editor']:
-                story.add_editor(Person(_type='Editor',
-                                        name=_editor['Editor'],
-                                        gender=_editor['Género editor'],
-                                        description=_editor['Descripción editor'])
-                                 .save_or_get(database))
 
         story.set_editorial(Editorial(name=entry['Editorial'],
                                       _type=entry['Tipo de editorial'],
@@ -63,4 +51,4 @@ def run(path, db_config_file, separator=';', min_separator='@', tag_separator=',
 
 
 if __name__ == "__main__":
-    run('./data/Base de datos.csv', '../firebase-config-key.json', separator=';', min_separator='@')
+    run('./data/Base de datos.csv', '../firebase-config-key.json', separator='|', min_separator='@')

@@ -4,7 +4,7 @@ from db.db_entity import DBEntity
 class Editorial(DBEntity):
 
     def __init__(self, name, _type, description, city):
-        super().__init__('Editorials', {'name': name})
+        super().__init__('Editoriales', {'name': name})
 
         self.name = name
         self.type = _type
@@ -13,10 +13,10 @@ class Editorial(DBEntity):
 
     def to_dict(self):
         return {
-            'name': self.name,
-            'type': self.type,
-            'description': self.description,
-            'city': self.city
+            'nombre': self.name,
+            'tipo': self.type,
+            'descripcion': self.description,
+            'ciudad': self.city
         }
 
     def __repr__(self):
