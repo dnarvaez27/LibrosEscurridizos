@@ -1,38 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <script src="app/fichas/fichas.js"></script>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Document</title>
     <style>
-        #botones{
-            text-align: center;
-        }
+      html,
+      body,
+      #frame {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+      }
 
-        #botones > button{
-            display: inline-block;
-        }
-        #frame {
-            height: 100%;
-            width: 100%;
-        }
-        #frameAct{
-            height: 100%;
-            width: 100%;
-        }
+      #botones {
+        text-align: center;
+        padding: 20px;
+      }
+
+      #botones > button {
+        display: inline-block;
+        background-color: #212121;
+        border: 1px solid #212121;
+        padding: 5px 10px;
+        color: white;
+        cursor: pointer;
+      }
+
+      iframe {
+        border: none;
+      }
+
+      #botones > button:hover {
+        background-color: white;
+        color: #212121;
+      }
+
+      #frame {
+        height: 100%;
+        width: 100%;
+      }
+
+      #frameAct {
+        height: 90%;
+        width: 100%;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <div id="botones">
-            <button onclick="cargarAutores()">Autores</button>
-            <button onclick="cargarEditoriales()">Editoriales</button>
-            <button onclick="cargarLibros()">Libros</button>
-            <button onclick="cargarIlustradores()">Ilustradores</button>
+      <button onclick="cargarAutores()">Autores</button>
+      <button onclick="cargarEditoriales()">Editoriales</button>
+      <button onclick="cargarLibros()">Libros</button>
+      <button onclick="cargarIlustradores()">Ilustradores</button>
     </div>
     <div id="frame">
-        <iframe id="frameAct"></iframe>
+      <iframe id="frameAct"></iframe>
     </div>
-</body>
+    <script>
+      function cargarAutores() {
+        let iframe = document.getElementById('frameAct');
+        iframe.setAttribute('src', 'fichasHTML/autor.html');
+      }
+      function cargarEditoriales() {
+        let iframe = document.getElementById('frameAct');
+        iframe.setAttribute('src', 'fichasHTML/editorial.html');
+      }
+      function cargarLibros() {
+        let iframe = document.getElementById('frameAct');
+        iframe.setAttribute('src', 'fichasHTML/libro.html');
+      }
+      function cargarIlustradores() {
+        let iframe = document.getElementById('frameAct');
+        iframe.setAttribute('src', 'fichasHTML/ilustrador.html');
+      }
+    </script>
+  </body>
 </html>
