@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,32 +9,59 @@
     <script defer src="/__/firebase/5.10.0/firebase-firestore.js"></script>
     <script defer src="/__/firebase/init.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
-    <title>Document</title>
-</head>
-<script>
-    function cargaAutor(){
-        const firebase = window.firebase;
-        const db = firebase.firestore();
-        //Aqui va la diversion
-        let array2 = [];
-        let divisor=document.getElementById("porAutor");
-        let stories = db.collection("Escritores");
-        stories.get().then( k => {
-            k.forEach(b => {
-            array2.push(b.data());
-            })
-            return array2;   
-        }).then(i =>{
-        console.log(i);
-        });
-        let a= document.createElement("p");
-        a.innerText="Terminando";
-        divisor.appendChild(a);
-    }    
-</script>
-<body onload="cargaAutor()">
-  <div id="porAutor">
-  </div>  
-</body>
+    <script defer type="module" src="../app/fichas/autor/list.js"></script>
+    <title>Autores</title>
+    <style>
+        * {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        #search {
+        width: 50%;
+        margin: 10px;
+        border-radius: 50px;
+        border: 1px solid gray;
+        padding: 5px 10px;
+        outline: none;
+      }
 
+      #autorHeader {
+        text-align: center;
+      }
+      #porAutor {
+        width: 100%;
+      }
+
+      #porAutor > tr {
+        cursor: pointer;
+      }
+
+      #porAutor > tr:hover {
+        background-color: gray;
+        color: white;
+      }
+
+      #porAutor > tr > td {
+        border: 1px solid gray;
+        padding: 5px 10px;
+      }
+    </style>
+</head>
+
+<body>
+    <div>
+    <div id="autorHeader">
+        <h1>Escritores</h1>
+        <input id="search"/>
+    </div>
+    <table id="porAutor">
+    </table>
+    </div>
+    <script defer type="module">
+      import AutorList from '../app/fichas/autor/list.js';
+      const list = new AutorList();
+      list.getAll();
+      const search = document.getElementById('search');
+      search.addEventListener('change', e => list.search(e.target.value));
+    </script>
+</body>
 </html>

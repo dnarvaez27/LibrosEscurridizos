@@ -94,6 +94,7 @@
       </div>
       <table id="libros-list"></table>
     </div>
+<<<<<<< HEAD
     <div id="detail-container">
       <div id="libro-detail-header">
         <div id="img"></div>
@@ -117,6 +118,12 @@
     <script type="module">
       import LibrosList from '/app/fichas/story/list.js';
       import LibrosDetail from '/app/fichas/story/detail.js';
+=======
+    <script defer type="module">
+      import LibrosList from '../app/fichas/story/list.js';
+      const list = new LibrosList();
+      list.getAll();
+>>>>>>> 300cdf6601609141a5bf11829ca01086753e17d3
 
       let state = undefined;
 
