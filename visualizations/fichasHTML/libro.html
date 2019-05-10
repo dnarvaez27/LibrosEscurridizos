@@ -8,7 +8,16 @@
     <script defer src="/__/firebase/init.js"></script>
 
     <title>Document</title>
-    <script defer type="module" src="../app/fichas/story/list.js"></script>
+
+    <script type="module" src="/app/fichas/story/list.js"></script>
+    <script type="module" src="/app/fichas/story/detail.js"></script>
+
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
     <style>
       * {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,12 +28,18 @@
         margin: 10px;
         border-radius: 50px;
         border: 1px solid gray;
-        padding: 5px 10px;
+        padding: 5px 40px 5px 30px;
         outline: none;
       }
 
       #libros-header {
         text-align: center;
+      }
+
+      #libros-header > .fa-search {
+        position: relative;
+        left: 40px;
+        color: gray;
       }
 
       #libros-list {
@@ -40,27 +55,109 @@
         color: white;
       }
 
+      #list-container.hidden {
+        display: none;
+      }
+
       #libros-list > tr > td {
         border: 1px solid gray;
         padding: 5px 10px;
       }
+
+      #detail-container {
+        display: none;
+      }
+
+      #detail-container.visible {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-gap: 10px;
+        padding: 20px 0;
+      }
+
+      #libro-detail-header {
+        text-align: center;
+      }
+
+      #libro-detail-header > span {
+        display: block;
+      }
+
+      #tags > span {
+        border-radius: 50px;
+        padding: 1px 10px;
+        border: 1px solid gray;
+        margin: 0 2px;
+        font-size: 0.8em;
+      }
+
+      #img {
+        width: 300px;
+        height: 300px;
+        background-color: gray;
+      }
     </style>
   </head>
   <body>
-    <div>
+    <div id="list-container">
       <div id="libros-header">
         <h1>Libros</h1>
+        <i class="fas fa-search"></i>
         <input id="search" />
       </div>
       <table id="libros-list"></table>
     </div>
-    <script defer type="module">
-      import LibrosList from '../app/fichas/story/list.js';
-      const list = new LibrosList();
-      list.getAll();
+    <div id="detail-container">
+      <div id="libro-detail-header">
+        <div id="img"></div>
+        <h1 id="titulo">Titulo del libro</h1>
+        <span id="anio">2991</span>
+        <span id="tema">Tema del libro</span>
+      </div>
+      <div>
+        <h3>Escritores</h3>
+        <div id="escritores"></div>
+        <h3>Ilustradores</h3>
+        <div id="ilustradores"></div>
+        <h3>Editorial</h3>
+        <div id="editorial"></div>
+        <h3>Sinopsis</h3>
+        <span id="sinopsis"></span>
+        <h3>Tags</h3>
+        <div id="tags"></div>
+      </div>
+    </div>
 
-      const search = document.getElementById('search');
-      search.addEventListener('change', e => list.search(e.target.value));
+    <script type="module">
+      import LibrosList from '/app/fichas/story/list.js';
+      import LibrosDetail from '/app/fichas/story/detail.js';
+
+      let state = undefined;
+
+      function clickHandler(data) {
+        state = data;
+        reload();
+      }
+
+      function reload() {
+        if (!state) {
+          document.getElementById('detail-container').classList.remove('visible');
+          document.getElementById('list-container').classList.remove('hidden');
+
+          const list = new LibrosList(clickHandler);
+          list.getAll();
+
+          const search = document.getElementById('search');
+          search.addEventListener('keyup', e => list.search(e.target.value));
+        } else {
+          document.getElementById('detail-container').classList.add('visible');
+          document.getElementById('list-container').classList.add('hidden');
+
+          const detail = new LibrosDetail(state);
+          detail.drawDetail();
+        }
+      }
+      reload();
     </script>
   </body>
 </html>

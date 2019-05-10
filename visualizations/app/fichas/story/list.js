@@ -1,3 +1,4 @@
+
 function removeContent(node) {
   while (node.firstChild) {
     node.removeChild(node.firstChild);
@@ -5,26 +6,20 @@ function removeContent(node) {
 }
 
 export default class LibrosList {
-  constructor() {
+  constructor(clickHandler) {
     const firebase = window.firebase;
     this.db = firebase.firestore();
     this.libros = [];
+    this.clickHandler = clickHandler;
   }
 
-  static drawList(list) {
-
-    function addClick(data) {
-      return () => {
-        console.log(data);
-      };
-    }
-
+  drawList(list) {
     const table = document.getElementById('libros-list');
     removeContent(table);
 
     list.forEach(data => {
       const row = document.createElement('tr');
-      row.addEventListener('click', addClick(data));
+      row.addEventListener('click', () => this.clickHandler(data));
       const title = document.createElement('td');
       title.appendChild(document.createTextNode(data.titulo));
       row.appendChild(title);
@@ -38,18 +33,14 @@ export default class LibrosList {
         .collection('Libros')
         .get()
         .then(qs => qs.forEach(l => this.libros.push(l.data())))
-        .then(() => LibrosList.drawList(this.libros));
+        .then(() => this.drawList(this.libros));
     }
     else {
-      LibrosList.drawList(this.libros);
+      this.drawList(this.libros);
     }
   }
 
   search(i) {
-    LibrosList.drawList(this.libros.filter(l => l['titulo'].toUpperCase().includes(i.toUpperCase())));
+    this.drawList(this.libros.filter(l => l['titulo'].toUpperCase().includes(i.toUpperCase())));
   }
-}
-
-export function search() {
-
 }
