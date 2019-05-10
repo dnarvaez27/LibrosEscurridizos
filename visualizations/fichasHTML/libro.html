@@ -12,6 +12,12 @@
     <script type="module" src="/app/fichas/story/list.js"></script>
     <script type="module" src="/app/fichas/story/detail.js"></script>
 
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
     <style>
       * {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -22,12 +28,18 @@
         margin: 10px;
         border-radius: 50px;
         border: 1px solid gray;
-        padding: 5px 10px;
+        padding: 5px 40px 5px 30px;
         outline: none;
       }
 
       #libros-header {
         text-align: center;
+      }
+
+      #libros-header > .fa-search {
+        position: relative;
+        left: 40px;
+        color: gray;
       }
 
       #libros-list {
@@ -90,6 +102,7 @@
     <div id="list-container">
       <div id="libros-header">
         <h1>Libros</h1>
+        <i class="fas fa-search"></i>
         <input id="search" />
       </div>
       <table id="libros-list"></table>
@@ -135,7 +148,7 @@
           list.getAll();
 
           const search = document.getElementById('search');
-          search.addEventListener('change', e => list.search(e.target.value));
+          search.addEventListener('keyup', e => list.search(e.target.value));
         } else {
           document.getElementById('detail-container').classList.add('visible');
           document.getElementById('list-container').classList.add('hidden');

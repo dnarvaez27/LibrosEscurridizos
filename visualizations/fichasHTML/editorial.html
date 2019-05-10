@@ -61,7 +61,7 @@
       const list = new EditorialList();
       list.getAll();
       const search = document.getElementById('search');
-      search.addEventListener('change', e => list.search(e.target.value));
+      search.addEventListener('keyup', e => list.search(e.target.value));
     </script>
 </body>
 </html>

@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script defer src="/__/firebase/5.10.0/firebase-app.js"></script>
     <script defer src="/__/firebase/5.10.0/firebase-firestore.js"></script>
     <script defer src="/__/firebase/init.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script defer type="module" src="../app/fichas/autor/list.js"></script>
     <title>Autores</title>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+      integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay"
+      crossorigin="anonymous"
+    />
+
     <style>
-        * {
+      * {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        #search {
+      }
+      #search {
         width: 50%;
         margin: 10px;
         border-radius: 50px;
@@ -45,23 +51,22 @@
         padding: 5px 10px;
       }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div>
-    <div id="autorHeader">
+      <div id="autorHeader">
         <h1>Escritores</h1>
-        <input id="search"/>
-    </div>
-    <table id="porAutor">
-    </table>
+        <input id="search" />
+      </div>
+      <table id="porAutor"></table>
     </div>
     <script defer type="module">
       import AutorList from '../app/fichas/autor/list.js';
       const list = new AutorList();
       list.getAll();
       const search = document.getElementById('search');
-      search.addEventListener('change', e => list.search(e.target.value));
+      search.addEventListener('keyup', e => list.search(e.target.value));
     </script>
-</body>
+  </body>
 </html>
