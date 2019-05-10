@@ -28,8 +28,10 @@
         border: 1px solid #212121;
         padding: 5px 10px;
         cursor: pointer;
+        outline: none;
       }
 
+      #botones > button.active,
       #botones > button:hover {
         background-color: white;
         color: #212121;
@@ -48,31 +50,46 @@
   </head>
   <body>
     <div id="botones">
-      <button onclick="cargarAutores()">Autores</button>
-      <button onclick="cargarEditoriales()">Editoriales</button>
-      <button onclick="cargarLibros()">Libros</button>
-      <button onclick="cargarIlustradores()">Ilustradores</button>
+      <button id="btn-libros" onclick="cargarLibros()">Libros</button>
+      <button id="btn-autores" onclick="cargarAutores()">Autores</button>
+      <button id="btn-ilustradores" onclick="cargarIlustradores()">Ilustradores</button>
+      <button id="btn-editoriales" onclick="cargarEditoriales()">Editoriales</button>
     </div>
     <div id="frame">
       <iframe id="frameAct"></iframe>
     </div>
+
     <script>
       function cargarAutores() {
+        document.querySelectorAll('#botones > button').forEach(m => m.classList.remove('active'));
+        document.getElementById('btn-autores').classList.add('active');
+
         let iframe = document.getElementById('frameAct');
         iframe.setAttribute('src', 'fichasHTML/autor.html');
       }
       function cargarEditoriales() {
+        document.querySelectorAll('#botones > button').forEach(m => m.classList.remove('active'));
+        document.getElementById('btn-editoriales').classList.add('active');
+
         let iframe = document.getElementById('frameAct');
         iframe.setAttribute('src', 'fichasHTML/editorial.html');
       }
       function cargarLibros() {
+        document.querySelectorAll('#botones > button').forEach(m => m.classList.remove('active'));
+        document.getElementById('btn-libros').classList.add('active');
+
         let iframe = document.getElementById('frameAct');
         iframe.setAttribute('src', 'fichasHTML/libro.html');
       }
       function cargarIlustradores() {
+        document.querySelectorAll('#botones > button').forEach(m => m.classList.remove('active'));
+        document.getElementById('btn-ilustradores').classList.add('active');
+
         let iframe = document.getElementById('frameAct');
         iframe.setAttribute('src', 'fichasHTML/ilustrador.html');
       }
+
+      cargarLibros();
     </script>
   </body>
 </html>
