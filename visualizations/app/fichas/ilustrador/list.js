@@ -12,7 +12,6 @@ function removeContent(node) {
     }
 
     drawList(list) {
-  
         const table = document.getElementById('porIlustrador');
         removeContent(table);
     
