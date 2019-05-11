@@ -10,18 +10,25 @@
     <script defer src="/__/firebase/init.js"></script>
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script defer type="module" src="../app/fichas/autor/list.js"></script>
-    <title>Autores</title>
+    <title>Editoriales</title>
     <style>
-        * {
+      * {
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        #search {
+      }
+
+      #search {
         width: 50%;
         margin: 10px;
         border-radius: 50px;
         border: 1px solid gray;
         padding: 5px 10px;
         outline: none;
+      }
+
+      #editorialHeader > .fa-search {
+        position: relative;
+        left: 40px;
+        color: gray;
       }
 
       #editorialHeader {
@@ -40,28 +47,88 @@
         color: white;
       }
 
+      #list-container.hidden {
+        display: none;
+      }
+
       #porEditorial > tr > td {
         border: 1px solid gray;
         padding: 5px 10px;
+      }
+
+      #detail-container {
+        display: none;
+      }
+
+      #detail-container.visible {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-gap: 10px;
+        padding: 20px 0;
+      }
+
+      #editorial-detail-header {
+        text-align: center;
+      }
+
+      #editorial-detail-header > span {
+        display: block;
+      }
+
+      #img {
+        width: 300px;
+        height: 300px;
+        background-color: gray;
       }
     </style>
 </head>
 
 <body>
-    <div>
+    <div id="list-container">
     <div id="editorialHeader">
         <h1>Editoriales</h1>
+        <i class="fas fa-search"></i>
         <input id="search"/>
     </div>
-    <table id="porEditorial">
-    </table>
+    <table id="porEditorial"></table>
+    </div>
+    <div id="detail-container">
+      <div id="editorial-detail-header">
+        <div id="img"></div>
+        <h1 id="nombre">Nombre de la editorial</h1>
+        <span id="tipo">Tipo de la editorial</span>
+      </div>
+      <div>
+        <h3>Descripción</h3>
+        <div id="descripcion"></div>
+      </div>
     </div>
     <script defer type="module">
       import EditorialList from '../app/fichas/editorial/list.js';
-      const list = new EditorialList();
-      list.getAll();
-      const search = document.getElementById('search');
-      search.addEventListener('keyup', e => list.search(e.target.value));
+      import EditorialDetail from '../app/fichas/editorial/detail.js';
+
+      let state = undefined;
+
+      function clickHandler(data){
+        state = data;
+        reload();
+      }
+      function reload(){
+      if(!state){
+        document.getElementById("detail-container").classList.remove("visible");
+        document.getElementById("list-container").classList.remove("hidden");
+        const list = new EditorialList(clickHandler);
+        list.getAll();
+        const search = document.getElementById('search');
+        search.addEventListener('keyup', e => list.search(e.target.value));}
+      else{
+        document.getElementById("detail-container").classList.add("visible");
+        document.getElementById("list-container").classList.add("hidden");
+        const detail = new EditorialDetail(state);
+        detail.drawDetail();
+      }
+    }
+    reload();
     </script>
 </body>
 </html>

@@ -4,31 +4,24 @@ function removeContent(node) {
     }
   }
   export default class EditorialList {
-    constructor() {
+    constructor(clickHandler) {
       const firebase = window.firebase;
       this.db = firebase.firestore();
       this.editoriales = [];
+      this.clickHandler = clickHandler;
     }
 
-    static drawList(list) {
-
-        function addClick(data) {
-          return () => {
-            console.log(data);
-          };
-        }
-    
-        const table = document.getElementById('porEditorial');
-        removeContent(table);
-    
-        list.forEach(data => {
-          const row = document.createElement('tr');
-          row.addEventListener('click', addClick(data));
-          const title = document.createElement('td');
-          title.appendChild(document.createTextNode(data.nombre));
-          row.appendChild(title);
-          table.appendChild(row);
-        });
+    drawList(list) {
+      const table = document.getElementById('porEditorial');
+      removeContent(table);
+      list.forEach(data => {
+      const row = document.createElement('tr');
+      row.addEventListener('click', () => this.clickHandler(data));
+      const title = document.createElement('td');
+      title.appendChild(document.createTextNode(data.nombre));
+      row.appendChild(title);
+      table.appendChild(row);
+      });
       }
   
     getAll() {
@@ -37,13 +30,13 @@ function removeContent(node) {
           .collection('Editoriales')
           .get()
           .then(qs => qs.forEach(l => this.editoriales.push(l.data())))
-          .then(() => EditorialList.drawList(this.editoriales));
+          .then(() => this.drawList(this.editoriales));
       }
       else {
-        EditorialList.drawList(this.editoriales);
+        this.drawList(this.editoriales);
       }
     }
     search(i) {
-      EditorialList.drawList(this.editoriales.filter(l => l['nombre'].toUpperCase().includes(i.toUpperCase())));
+      this.drawList(this.editoriales.filter(l => l['nombre'].toUpperCase().includes(i.toUpperCase())));
     }
   }

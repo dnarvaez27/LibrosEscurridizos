@@ -4,26 +4,21 @@ function removeContent(node) {
     }
   }
   export default class IlustradorList {
-    constructor() {
+    constructor(clickHandler) {
       const firebase = window.firebase;
       this.db = firebase.firestore();
       this.ilustradores = [];
+      this.clickHandler = clickHandler;
     }
 
-    static drawList(list) {
-
-        function addClick(data) {
-          return () => {
-            console.log(data);
-          };
-        }
-    
+    drawList(list) {
+  
         const table = document.getElementById('porIlustrador');
         removeContent(table);
     
         list.forEach(data => {
           const row = document.createElement('tr');
-          row.addEventListener('click', addClick(data));
+          row.addEventListener('click', () => this.clickHandler(data));
           const title = document.createElement('td');
           title.appendChild(document.createTextNode(data.nombre));
           row.appendChild(title);
@@ -37,13 +32,13 @@ function removeContent(node) {
           .collection('Ilustradores')
           .get()
           .then(qs => qs.forEach(l => this.ilustradores.push(l.data())))
-          .then(() => IlustradorList.drawList(this.ilustradores));
+          .then(() => this.drawList(this.ilustradores));
       }
       else {
-        IlustradorList.drawList(this.ilustradores);
+        this.drawList(this.ilustradores);
       }
     }
     search(i) {
-      IlustradorList.drawList(this.ilustradores.filter(l => l['nombre'].toUpperCase().includes(i.toUpperCase())));
+      this.drawList(this.ilustradores.filter(l => l['nombre'].toUpperCase().includes(i.toUpperCase())));
     }
   }
