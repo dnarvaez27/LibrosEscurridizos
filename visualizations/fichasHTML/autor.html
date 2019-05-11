@@ -29,6 +29,11 @@
         padding: 5px 10px;
         outline: none;
       }
+      #autorHeader > .fa-search {
+        position: relative;
+        left: 40px;
+        color: gray;
+      }
 
       #autorHeader {
         text-align: center;
@@ -46,27 +51,91 @@
         color: white;
       }
 
+      #list-container.hidden {
+        display: none;
+      }
+
       #porAutor > tr > td {
         border: 1px solid gray;
         padding: 5px 10px;
       }
+
+      #detail-container {
+        display: none;
+      }
+
+      #detail-container.visible {
+        display: grid;
+        grid-template-columns: 1fr 4fr;
+        grid-gap: 10px;
+        padding: 20px 0;
+      }
+
+      #autor-detail-header {
+        text-align: center;
+      }
+
+      #autor-detail-header > span {
+        display: block;
+      }
+
+      #img {
+        width: 300px;
+        height: 300px;
+        background-color: gray;
+      }
+
     </style>
   </head>
-
   <body>
-    <div>
+    <div id="list-container">
       <div id="autorHeader">
         <h1>Escritores</h1>
+        <i class="fas fa-search"></i>
         <input id="search" />
       </div>
       <table id="porAutor"></table>
     </div>
+    <div id="detail-container">
+      <div id="autor-detail-header">
+        <div id="img"></div>
+        <h1 id="nombre">Nombre del autor</h1>
+        <span id="genero">Genero del autor</span>
+      </div>
+      <div>
+        <h3>Descripción</h3>
+        <div id="descripcion"></div>
+      </div>
+    </div>
     <script defer type="module">
       import AutorList from '../app/fichas/autor/list.js';
-      const list = new AutorList();
-      list.getAll();
-      const search = document.getElementById('search');
-      search.addEventListener('keyup', e => list.search(e.target.value));
+      import AutorDetail from '../app/fichas/autor/detail.js';
+
+      let state = undefined;
+
+      function clickHandler(data){
+        state = data;
+        reload();
+      }
+
+      function reload(){
+        if(!state){
+          document.getElementById("detail-container").classList.remove("visible");
+          document.getElementById("list-container").classList.remove("hidden");
+          const list = new AutorList(clickHandler);
+          list.getAll();
+          const search = document.getElementById('search');
+          search.addEventListener('keyup', e => list.search(e.target.value));
+        }
+        else{
+          document.getElementById("detail-container").classList.add("visible");
+          document.getElementById("list-container").classList.add("hidden");
+
+          const detail = new AutorDetail(state);
+          detail.drawDetail();
+        }
+      }
+      reload();
     </script>
   </body>
 </html>
